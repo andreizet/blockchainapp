@@ -1,12 +1,22 @@
 <template>
   <img alt="Vue logo" width="256" height="256" src="./assets/logo.png">
-  <div>
+  <div class="main-container p-centered">
     <h1>Birth Certificates</h1>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">Add</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">View</a></li>
+    <ul class="tab tab-block mb-2">
+      <li class="tab-item"
+          :class="view === 'add' ? 'active' : ''">
+        <a href="#" @click="changeView('add')">
+          Add
+        </a>
+      </li>
+      <li class="tab-item"
+          :class="view === 'view' ? 'active' : ''">
+        <a href="#" @click="changeView('view')">
+          View
+        </a>
+      </li>
     </ul>
-    <Add/>
+    <Add v-if="view === 'add'"/>
   </div>
 </template>
 
@@ -17,7 +27,17 @@ export default {
   name: 'App',
   components: {
     Add
-  }
+  },
+  data() {
+    return {
+      view: 'add',
+    };
+  },
+  methods: {
+    changeView(newView) {
+      this.view = newView;
+    },
+  },
 }
 </script>
 
@@ -46,5 +66,12 @@ li {
 }
 a {
   color: #42b983;
+}
+.main-container {
+  width: 50%;
+}
+
+a:focus {
+  box-shadow: unset;
 }
 </style>
