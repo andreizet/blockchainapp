@@ -1,5 +1,5 @@
 <template>
-  <img alt="Vue logo" width="256" height="256" src="./assets/logo.png">
+  <img alt="Vue logo" width="150" height="150" src="./assets/logo.png">
   <div class="main-container p-centered">
     <h1>Birth Certificates</h1>
     <ul class="tab tab-block mb-2">
@@ -17,16 +17,19 @@
       </li>
     </ul>
     <Add v-if="view === 'add'"/>
+    <View v-else></View>
   </div>
 </template>
 
 <script>
 import Add from './components/Add.vue'
+import View from './components/View.vue'
 
 export default {
   name: 'App',
   components: {
-    Add
+    Add,
+    View,
   },
   data() {
     return {
@@ -63,9 +66,6 @@ ul {
 li {
   display: inline-block;
   margin: 0 10px;
-}
-a {
-  color: #42b983;
 }
 .main-container {
   width: 50%;
