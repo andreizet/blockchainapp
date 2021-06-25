@@ -12,7 +12,9 @@
     "core-js": "^3.6.5",
     "spectre.css": "^0.5.9",
     "v-calendar": "^3.0.0-alpha.4",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "truffle": "^5.3.11",
+    "truffle-contract": "^4.0.31"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
