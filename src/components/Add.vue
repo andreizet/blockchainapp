@@ -4,7 +4,7 @@
     <br />
     Identification code will be automatically generated.
   </p>
-  <form class="form-horizontal p-centered">
+  <div class="form-horizontal p-centered">
     <div class="form-group">
       <div class="col-2 col-sm-12"></div>
       <div class="col-2 col-sm-12">
@@ -86,16 +86,18 @@
     </div>
     <button class="btn btn-primary"
             :class="!this.canSave ? 'tooltip': ''"
+            @click="save()"
             :data-tooltip="buttonTooltip"
             :disabled="!canSave">Save</button>
-  </form>
+  </div>
 </template>
 
 <script>
+import { API_URL, API_SAVE } from "../utils/constants";
 import { DatePicker } from "v-calendar";
 
 export default {
-  name: "HelloWorld",
+  name: "Add",
   components: {
     DatePicker
   },
@@ -118,10 +120,33 @@ export default {
       return this.canSave ? null : 'All inputs are required';
     },
   },
-  watch: {
-    date() {
-      console.log(this.date);
-    }
-  }
+  methods: {
+    async save() {
+      let url = API_URL + API_SAVE;
+
+      const rawResponse = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          date: this.date,
+          f_name: this.f_name,
+          l_name: this.l_name,
+          mother: this.mother,
+          father: this.father,
+        })
+      });
+      const content = await rawResponse.json();
+      if (content.status === 0) {
+        this.date = new Date();
+        this.f_name = null;
+        this.l_name = null;
+        this.mother = null;
+        this.father = null;
+      }
+    },
+  },
 };
 </script>
