@@ -1,5 +1,6 @@
 pragma solidity >=0.4.22 <0.9.0;
 
+//Contract definition
 contract Contract {
     uint public id;
 

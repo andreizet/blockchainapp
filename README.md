@@ -1,24 +1,21 @@
 # blockchainapp
 
+## Prerequisites
+[NodeJS](https://nodejs.org/en/)
+
+[Ganache](https://www.trufflesuite.com/ganache) - Development blockchain
+
+[Truffle](https://www.npmjs.com/package/truffle) - Development environment for etherum
+
+`npm install -g truffle`
 ## Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Start the app
 ```
 npm run serve
+npm run startApi
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

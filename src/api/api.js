@@ -10,15 +10,33 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
+// Creates a new connection via Web3 to Ganache blockchain
 const web3 = new Web3(new Web3.providers.HttpProvider(BLOCKCHAIN_URL));
 
+/**
+ *
+ * @param web3 Web3 Instance
+ * @returns {Promise<Contract|>} Instance of the contract
+ */
 const getContract = async (web3) => {
+  /*
+    Step 1: set the default account to the first in the list.
+    In a real world scenario, it will be predefined.
+  */
   const accounts = await web3.eth.getAccounts();
   web3.eth.defaultAccount = accounts[0];
 
+  /*
+    Step 2: Read the contract definition
+   */
   let source = fs.readFileSync('build/contracts/Contract.json');
   source = JSON.parse(source);
 
+  /*
+  Step 3: Set corresponding network
+   - abi: Contract Application Binary Interface,
+          or the standard way to interact with contracts
+  */
   const netId = await web3.eth.net.getId();
   const deployedNetwork = source.networks[netId];
   const contract = new web3.eth.Contract(
@@ -43,6 +61,10 @@ app.get("/" + API_VIEW, async (req, res) => {
     searchValue = searchValue.toLowerCase();
   }
 
+  /*
+    Search is made by looping all contracts and only keeping the ones that
+    match the desired value
+  */
   for(let i = 1; i <= size; i += 1) {
     let c = await contract.methods.map(i).call();
     if(!searchValue
@@ -60,6 +82,14 @@ app.get("/" + API_VIEW, async (req, res) => {
 app.post("/" + API_SAVE, async (req, res) => {
   const contract = await getContract(web3);
 
+  /*
+    Create a new contract with given info, then send it to then network
+    gas definition: https://support.blockchain.com/hc/en-us/articles/360027772571-What-is-gas-
+    A gas unit is the smallest type of work that is processed on the Ethereum network.
+    Validating and confirming transactions on the Ethereum blockchain requires a certain amount of gas,
+    depending on the size and type of each transaction.
+    Gas measures the amount of work miners need to do in order to include transactions in a block."
+  */
   await contract.methods.createCertificate(
     req.body.f_name,
     req.body.l_name,
